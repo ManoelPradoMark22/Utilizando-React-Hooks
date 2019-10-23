@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
-  const [techs, setTech] = useState(['ReactJS', 'React Native']); // desestruturação
+  const [techs, setTech] = useState([]); // desestruturação
   /* sempre coloque o estado inicial, nesse caso pode ser um array vazio
   ou já com algumas tecnologias inicialmente.
   Para cada tipo de info dentro do componente teremos um estado separado.
@@ -14,6 +14,20 @@ function App() {
     setTech([...techs, newTech]);
     setNewTech('');
   }
+
+  // simula o componentDidMount
+  useEffect(() => {
+    const storagetechs = localStorage.getItem('techs');
+
+    if (storagetechs) {
+      setTech(JSON.parse(storagetechs));
+    }
+  }, []);
+
+  // simula o componentDidUpdate
+  useEffect(() => {
+    localStorage.setItem('techs', JSON.stringify(techs));
+  }, [techs]);
 
   /* toda vez q alteramos a variavel techs o return executa novamente, como o render */
   return (
